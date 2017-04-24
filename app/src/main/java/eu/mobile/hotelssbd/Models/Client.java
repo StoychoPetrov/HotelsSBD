@@ -11,6 +11,8 @@ public class Client {
     private String  mLastName;
     private String  mEgn;
 
+    public Client(){}
+
     public Client(int mClientId, String mFirstName, String mLastName, String mEgn) {
         this.mClientId = mClientId;
         this.mFirstName = mFirstName;

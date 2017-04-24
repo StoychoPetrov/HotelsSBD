@@ -45,8 +45,9 @@ public class RoomsActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(this,MakeReservationActivity.class);
+        intent.putExtra("room_Details_id",mRoomsDetails.get(position).getmRoomDetailId());
         startActivity(intent);
     }
 }

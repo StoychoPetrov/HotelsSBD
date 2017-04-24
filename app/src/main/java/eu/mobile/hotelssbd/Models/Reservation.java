@@ -10,6 +10,8 @@ public class Reservation {
     private String      mDateFrom;
     private String      mDateTo;
 
+    public Reservation(){}
+
     public Reservation(int mReservationId, String mDateFrom, String mDateTo) {
         this.mReservationId = mReservationId;
         this.mDateFrom = mDateFrom;

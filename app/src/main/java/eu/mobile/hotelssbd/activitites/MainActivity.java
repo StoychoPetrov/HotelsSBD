@@ -5,28 +5,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.mobile.hotelssbd.Models.Room;
 import eu.mobile.hotelssbd.database.CategoriesTable;
 import eu.mobile.hotelssbd.database.HotelsTable;
 import eu.mobile.hotelssbd.Models.Hotel;
 import eu.mobile.hotelssbd.Models.RoomDetails;
 import eu.mobile.hotelssbd.R;
 import eu.mobile.hotelssbd.adapters.HotelsAdapter;
+import eu.mobile.hotelssbd.database.RoomsTable;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener{
 
     private ListView        mHotelsListView;
     private List<Hotel>     mHotels = new ArrayList<>();
+    private Button          mShowReservationsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initUI();
+        setListeners();
         loadDatabase();
 
         setAdapter();
@@ -34,7 +39,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void initUI(){
-        mHotelsListView = (ListView) findViewById(R.id.hotels_list_view);
+        mHotelsListView         = (ListView) findViewById(R.id.hotels_list_view);
+        mShowReservationsBtn    = (Button)   findViewById(R.id.show_btn);
+    }
+
+    private void setListeners(){
+        mShowReservationsBtn.setOnClickListener(this);
     }
 
     private void setAdapter(){
@@ -86,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         if(CategoriesTable.getInstance(this).getRoomDetailsCount() == 0)
             loadCategoriesOfRooms();
+
+        if(RoomsTable.getInstance(this).countRooms() == 0)
+            insertRooms();
     }
 
     private void loadCategoriesOfRooms(){
@@ -140,10 +153,88 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    private void insertRooms(){
+        List<Room> meliaRooms   = new ArrayList<>();
+        meliaRooms.add(new Room(1001,"Very nice room",1));
+        meliaRooms.add(new Room(1002,"Very nice room",2));
+        meliaRooms.add(new Room(1003,"Very nice room",3));
+        meliaRooms.add(new Room(1004,"Very nice room",4));
+        meliaRooms.add(new Room(1005,"Very nice room",5));
+        meliaRooms.add(new Room(1006,"Very nice room",6));
+        meliaRooms.add(new Room(1007,"Very nice room",7));
+        meliaRooms.add(new Room(1008,"Very nice room",8));
+        meliaRooms.add(new Room(1009,"Very nice room",9));
+        meliaRooms.add(new Room(1010,"Very nice room",10));
+        meliaRooms.add(new Room(1011,"Very nice room",11));
+        meliaRooms.add(new Room(1012,"Very nice room",12));
+        meliaRooms.add(new Room(1013,"Very nice room",13));
+        meliaRooms.add(new Room(1014,"Very nice room",14));
+        meliaRooms.add(new Room(1015,"Very nice room",15));
+        meliaRooms.add(new Room(1016,"Very nice room",16));
+        meliaRooms.add(new Room(1017,"Very nice room",17));
+        meliaRooms.add(new Room(1018,"Very nice room",18));
+        meliaRooms.add(new Room(1019,"Very nice room",19));
+        meliaRooms.add(new Room(1020,"Very nice room",20));
+
+        List<Room> interaRooms  = new ArrayList<>();
+        interaRooms.add(new Room(3100,"Very nice room",21));
+        interaRooms.add(new Room(3101,"Very nice room",22));
+        interaRooms.add(new Room(3102,"Very nice room",23));
+        interaRooms.add(new Room(3103,"Very nice room",24));
+        interaRooms.add(new Room(3104,"Very nice room",25));
+        interaRooms.add(new Room(3105,"Very nice room",26));
+        interaRooms.add(new Room(3106,"Very nice room",27));
+        interaRooms.add(new Room(3107,"Very nice room",28));
+        interaRooms.add(new Room(3108,"Very nice room",29));
+        interaRooms.add(new Room(3109,"Very nice room",30));
+        interaRooms.add(new Room(3110,"Very nice room",31));
+        interaRooms.add(new Room(3111,"Very nice room",32));
+
+        List<Room> grifidRooms  = new ArrayList<>();
+        grifidRooms.add(new Room(401,"Very nice room",33));
+        grifidRooms.add(new Room(402,"Very nice room",34));
+        grifidRooms.add(new Room(403,"Very nice room",35));
+        grifidRooms.add(new Room(404,"Very nice room",36));
+        grifidRooms.add(new Room(405,"Very nice room",37));
+        grifidRooms.add(new Room(406,"Very nice room",38));
+        grifidRooms.add(new Room(407,"Very nice room",39));
+        grifidRooms.add(new Room(408,"Very nice room",40));
+        grifidRooms.add(new Room(409,"Very nice room",41));
+
+        List<Room> preslavRooms = new ArrayList<>();
+        preslavRooms.add(new Room(301,"Very nice room",42));
+
+        List<Room> vivaRooms    = new ArrayList<>();
+        vivaRooms.add(new Room(201,"Very nice room",43));
+        vivaRooms.add(new Room(202,"Very nice room",44));
+        vivaRooms.add(new Room(203,"Very nice room",45));
+        vivaRooms.add(new Room(204,"Very nice room",46));
+        vivaRooms.add(new Room(205,"Very nice room",47));
+
+        RoomsTable  roomsTable  = RoomsTable.getInstance(this);
+        roomsTable.insertRooms(meliaRooms);
+        roomsTable.insertRooms(interaRooms);
+        roomsTable.insertRooms(grifidRooms);
+        roomsTable.insertRooms(preslavRooms);
+        roomsTable.insertRooms(vivaRooms);
+    }
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(this,RoomsActivity.class);
         intent.putExtra("hotel_id",mHotels.get(i).getmHotelId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+
+        switch (id){
+            case R.id.show_btn:
+                Intent intent = new Intent(this,ReservationsActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

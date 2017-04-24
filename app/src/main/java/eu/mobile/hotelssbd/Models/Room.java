@@ -9,11 +9,14 @@ public class Room {
     private int     mRoomId;
     private int     mRoomNumber;
     private String  mRoomDescription;
+    private int     mRoomDetailId;
 
-    public Room(int mRoomId, int mRoomNumber, String mRoomDescription) {
-        this.mRoomId = mRoomId;
-        this.mRoomNumber = mRoomNumber;
-        this.mRoomDescription = mRoomDescription;
+    public Room(){}
+
+    public Room(int mRoomNumber, String mRoomDescription, int mRoomDetailId) {
+        this.mRoomNumber        = mRoomNumber;
+        this.mRoomDescription   = mRoomDescription;
+        this.mRoomDetailId      = mRoomDetailId;
     }
 
     public int getmRoomId() {
@@ -38,5 +41,13 @@ public class Room {
 
     public void setmRoomDescription(String mRoomDescription) {
         this.mRoomDescription = mRoomDescription;
+    }
+
+    public int getmRoomDetailId() {
+        return mRoomDetailId;
+    }
+
+    public void setmRoomDetailId(int mRoomDetailId) {
+        this.mRoomDetailId = mRoomDetailId;
     }
 }

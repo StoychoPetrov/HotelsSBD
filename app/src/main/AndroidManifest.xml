@@ -22,7 +22,8 @@
             android:value="AIzaSyB9fblRcWDI8-33LEWElG7EcxNd9A60Q7U" />
 
         <activity android:name=".activitites.RoomsActivity" />
-        <activity android:name=".activitites.MakeReservationActivity"></activity>
+        <activity android:name=".activitites.MakeReservationActivity" />
+        <activity android:name=".activitites.ReservationsActivity"></activity>
     </application>
 
 </manifest>

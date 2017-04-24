@@ -85,7 +85,7 @@ public class HotelsTable extends SqliteDatabase {
         return hotels;
     }
 
-    private List<String> selectImagesByHotelId(int imageId){
+    public List<String> selectImagesByHotelId(int imageId){
         List<String> images = new ArrayList<>();
 
         String query = "SELECT * FROM " + IMAGES_TABLE_NAME +

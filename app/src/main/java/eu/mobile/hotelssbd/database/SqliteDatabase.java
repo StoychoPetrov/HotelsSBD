@@ -38,26 +38,26 @@ public class SqliteDatabase extends SQLiteOpenHelper {
     protected static final String COLUMN_DESCRIPTION                          = "description";
 
     /*********** Rooms table **********************/
-    private static final String ROOMS_TABLE_NAME                            = "rooms_table";
-    private static final String COLUMN_ROOM_ID                              = "room_id";
-    private static final String COLUMN_ROOM_NUMBER                          = "room_number";
-    private static final String COLUMN_ROOM_DESCRIPTION                     = "room_description";
-    private static final String COLUMN_ROOM_DETAIL_ID_FOREIGN_KEY            = "room_detail_id_FOREIGN_key";
+    protected static final String ROOMS_TABLE_NAME                            = "rooms_table";
+    protected static final String COLUMN_ROOM_ID                              = "room_id";
+    protected static final String COLUMN_ROOM_NUMBER                          = "room_number";
+    protected static final String COLUMN_ROOM_DESCRIPTION                     = "room_description";
+    protected static final String COLUMN_ROOM_DETAIL_ID_FOREIGN_KEY           = "room_detail_id_FOREIGN_key";
 
     /*********** Clients table ********************/
-    private static final String CLIENTS_TABLE_NAME                          = "clients_table";
-    private static final String COLUMN_CLIENT_ID                            = "client_id";
-    private static final String COLUMN_FIRST_NAME                           = "first_name";
-    private static final String COLUMN_LAST_NAME                            = "last_name";
-    private static final String COLUMN_EGN                                  = "egn";
+    protected static final String CLIENTS_TABLE_NAME                          = "clients_table";
+    protected static final String COLUMN_CLIENT_ID                            = "client_id";
+    protected static final String COLUMN_FIRST_NAME                           = "first_name";
+    protected static final String COLUMN_LAST_NAME                            = "last_name";
+    protected static final String COLUMN_EGN                                  = "egn";
 
     /*********** Reservations table ***************/
-    private static final String RESERVATIONS_TABLE_NAME                     = "reservations_table";
-    private static final String COLUMN_RESERVATION_ID                       = "reservation_id";
-    private static final String COLUMN_DATE_FROM                            = "date_from";
-    private static final String COLUMN_DATE_TO                              = "date_to";
-    private static final String COLUMN_ROOM_ID_FOREIGN_KEY                  = "room_id_FOREIGN_key";
-    private static final String COLUMN_CLIENT_ID_FOREIGN_KEY                = "client_id_FOREIGN_key";
+    protected static final String RESERVATIONS_TABLE_NAME                     = "reservations_table";
+    protected static final String COLUMN_RESERVATION_ID                       = "reservation_id";
+    protected static final String COLUMN_DATE_FROM                            = "date_from";
+    protected static final String COLUMN_DATE_TO                              = "date_to";
+    protected static final String COLUMN_ROOM_ID_FOREIGN_KEY                  = "room_id_FOREIGN_key";
+    protected static final String COLUMN_CLIENT_ID_FOREIGN_KEY                = "client_id_FOREIGN_key";
 
 
     //Create tables
