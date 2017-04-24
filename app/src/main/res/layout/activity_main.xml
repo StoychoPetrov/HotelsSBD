@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="eu.mobile.hotelssbd.activitites.MainActivity">
+
+    <RelativeLayout
+        android:id              ="@+id/bar"
+        android:layout_width    ="match_parent"
+        android:layout_height   ="50dp"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width            ="match_parent"
+            android:layout_height           ="wrap_content"
+            android:layout_centerVertical   ="true"
+            android:text                    ="@string/select_hotel"
+            android:textColor               ="@android:color/white"
+            android:textSize                ="20sp"
+            android:paddingLeft             ="15dp"
+            android:paddingRight            ="15dp"/>
+
+    </RelativeLayout>
+
+    <ListView
+        android:id              ="@+id/hotels_list_view"
+        android:layout_width    ="match_parent"
+        android:layout_height   ="match_parent"
+        android:layout_below    ="@+id/bar"/>
+
+</RelativeLayout>

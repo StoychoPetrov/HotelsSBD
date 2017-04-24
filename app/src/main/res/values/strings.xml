@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HotelsSBD</string>
+    <string name="select_hotel">Select hotel</string>
+    <string name="select_room">Select room</string>
+    <string name="google_place_api">AIzaSyB9fblRcWDI8-33LEWElG7EcxNd9A60Q7U</string>
+
+    <string name="first_name">First name:</string>
+    <string name="last_name">Last name:</string>
+    <string name="egn">EGN:</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="reservation_details">Reservation details</string>
+</resources>
