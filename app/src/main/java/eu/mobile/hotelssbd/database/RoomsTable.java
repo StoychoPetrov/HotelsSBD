@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.mobile.hotelssbd.Models.Room;
+import eu.mobile.hotelssbd.models.Room;
 
 /**
  * Created by stoycho.petrov on 24/04/2017.

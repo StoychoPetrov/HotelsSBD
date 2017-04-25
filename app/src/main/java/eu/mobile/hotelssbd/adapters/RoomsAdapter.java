@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import eu.mobile.hotelssbd.Models.RoomDetails;
+import eu.mobile.hotelssbd.models.RoomDetails;
 import eu.mobile.hotelssbd.R;
 
 /**

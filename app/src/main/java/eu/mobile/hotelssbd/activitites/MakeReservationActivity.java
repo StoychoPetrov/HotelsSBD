@@ -12,10 +12,9 @@ import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
-import eu.mobile.hotelssbd.Models.Client;
-import eu.mobile.hotelssbd.Models.Reservation;
+import eu.mobile.hotelssbd.models.Client;
+import eu.mobile.hotelssbd.models.Reservation;
 import eu.mobile.hotelssbd.R;
 import eu.mobile.hotelssbd.database.ReservationsTable;
 import eu.mobile.hotelssbd.database.RoomsTable;

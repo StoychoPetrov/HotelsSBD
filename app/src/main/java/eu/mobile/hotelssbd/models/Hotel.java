@@ -1,4 +1,4 @@
-package eu.mobile.hotelssbd.Models;
+package eu.mobile.hotelssbd.models;
 
 import java.util.List;
 

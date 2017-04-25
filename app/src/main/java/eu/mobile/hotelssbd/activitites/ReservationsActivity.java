@@ -7,11 +7,11 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.mobile.hotelssbd.Models.Client;
-import eu.mobile.hotelssbd.Models.Hotel;
-import eu.mobile.hotelssbd.Models.Reservation;
-import eu.mobile.hotelssbd.Models.Room;
-import eu.mobile.hotelssbd.Models.RoomDetails;
+import eu.mobile.hotelssbd.models.Client;
+import eu.mobile.hotelssbd.models.Hotel;
+import eu.mobile.hotelssbd.models.Reservation;
+import eu.mobile.hotelssbd.models.Room;
+import eu.mobile.hotelssbd.models.RoomDetails;
 import eu.mobile.hotelssbd.R;
 import eu.mobile.hotelssbd.adapters.ReservationsAdapter;
 import eu.mobile.hotelssbd.database.ReservationsTable;

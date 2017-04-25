@@ -3,7 +3,6 @@ package eu.mobile.hotelssbd.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import eu.mobile.hotelssbd.DownloadImage;
-import eu.mobile.hotelssbd.Models.Hotel;
+import eu.mobile.hotelssbd.connectionClasses.DownloadImage;
+import eu.mobile.hotelssbd.models.Hotel;
 import eu.mobile.hotelssbd.R;
 
 /**

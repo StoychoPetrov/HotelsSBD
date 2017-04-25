@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.mobile.hotelssbd.database.CategoriesTable;
-import eu.mobile.hotelssbd.Models.RoomDetails;
+import eu.mobile.hotelssbd.models.RoomDetails;
 import eu.mobile.hotelssbd.R;
 import eu.mobile.hotelssbd.adapters.RoomsAdapter;
 

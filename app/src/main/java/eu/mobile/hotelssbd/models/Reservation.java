@@ -1,4 +1,4 @@
-package eu.mobile.hotelssbd.Models;
+package eu.mobile.hotelssbd.models;
 
 /**
  * Created by stoycho.petrov on 07/04/2017.

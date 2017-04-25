@@ -11,11 +11,11 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.mobile.hotelssbd.Models.Room;
+import eu.mobile.hotelssbd.models.Room;
 import eu.mobile.hotelssbd.database.CategoriesTable;
 import eu.mobile.hotelssbd.database.HotelsTable;
-import eu.mobile.hotelssbd.Models.Hotel;
-import eu.mobile.hotelssbd.Models.RoomDetails;
+import eu.mobile.hotelssbd.models.Hotel;
+import eu.mobile.hotelssbd.models.RoomDetails;
 import eu.mobile.hotelssbd.R;
 import eu.mobile.hotelssbd.adapters.HotelsAdapter;
 import eu.mobile.hotelssbd.database.RoomsTable;

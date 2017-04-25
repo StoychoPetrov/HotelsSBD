@@ -1,4 +1,4 @@
-package eu.mobile.hotelssbd;
+package eu.mobile.hotelssbd.connectionClasses;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
