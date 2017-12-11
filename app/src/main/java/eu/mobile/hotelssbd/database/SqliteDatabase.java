@@ -17,11 +17,12 @@ public class SqliteDatabase extends SQLiteOpenHelper {
     protected static final String HOTELS_TABLE_NAME                           = "hotels_table";
     protected static final String COLUMN_HOTEL_ID                             = "hotel_id";
     protected static final String COLUMN_HOTEL_NAME                           = "hotel_name";
+    protected static final String COLUMN_STARS_COUNT                          = "stars_count";
     protected static final String COLUMN_HOTEL_DESCRIPTION                    = "hotel_description";
 
     /*********** Images table ***************/
     protected static final String IMAGES_TABLE_NAME                           = "images_table";
-    protected static final String COLUMN_IMAGE_ID                             ="image_id";
+    protected static final String COLUMN_IMAGE_ID                             = "image_id";
     protected static final String COLUMN_IMAGE_PATH                           = "image_path";
     protected static final String COLUMN_HOTEL_ID_FOREIGN_KEY                 = "hotel_id_FOREIGN_key";
 
@@ -29,8 +30,8 @@ public class SqliteDatabase extends SQLiteOpenHelper {
     protected static final String ROOM_DETAILS_TABLE_NAME                     = "room_details_table";
     protected static final String COLUMN_ROOM_DETAIL_ID                       = "room_detal_id";
     protected static final String COLUMN_ROOM_PRICE                           = "room_price";
-    protected static final String COLUMN_ROOM_DETAILS_HOTEL_ID_FOREIGN_KEY     = "room_details_hotel_id_FOREIGN_key";
-    protected static final String COLUMN_CATEGORY_ID_FOREIGN_KEY               = "category_id_FOREIGN_key";
+    protected static final String COLUMN_ROOM_DETAILS_HOTEL_ID_FOREIGN_KEY    = "room_details_hotel_id_FOREIGN_key";
+    protected static final String COLUMN_CATEGORY_ID_FOREIGN_KEY              = "category_id_FOREIGN_key";
 
     /*********** Categories table ***********/
     protected static final String CATEGORIES_TABLE_NAME                       = "categories_table";
@@ -64,7 +65,8 @@ public class SqliteDatabase extends SQLiteOpenHelper {
     private static final String CREATE_HOTELS_TABLE = "CREATE TABLE " + HOTELS_TABLE_NAME + " ( "
             + COLUMN_HOTEL_ID                           + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_HOTEL_NAME                         + " TEXT, "
-            + COLUMN_HOTEL_DESCRIPTION                  + " TEXT)";
+            + COLUMN_HOTEL_DESCRIPTION                  + " TEXT, "
+            + COLUMN_STARS_COUNT                        + " INTEGER)";
 
     private static final String CREATE_IMAGES_TABLE = "CREATE TABLE " + IMAGES_TABLE_NAME + " ( "
             + COLUMN_IMAGE_ID                           + " INTEGER PRIMARY KEY AUTOINCREMENT, "

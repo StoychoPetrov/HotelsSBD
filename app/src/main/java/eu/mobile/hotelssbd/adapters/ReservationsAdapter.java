@@ -41,7 +41,14 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
     private List<Hotel>         mHotels;
     private LayoutInflater      mLayoutInflater;
 
-    public ReservationsAdapter(@NonNull Context context, @NonNull List<Reservation> reservations, List<Room> rooms, List<Client> clients, List<RoomDetails> roomDetails, List<Hotel> hotels) {
+    private Context             mContext;
+    private OnDeleteClicked     mDeleteListener;
+
+    public interface OnDeleteClicked{
+        void onDelete(int position);
+    }
+
+    public ReservationsAdapter(@NonNull Context context, @NonNull List<Reservation> reservations, List<Room> rooms, List<Client> clients, List<RoomDetails> roomDetails, List<Hotel> hotels, OnDeleteClicked listener) {
         super(context, R.layout.item_reservation, reservations);
 
         mReservations       = reservations;
@@ -50,6 +57,9 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         mRoomDetails        = roomDetails;
         mHotels             = hotels;
         mLayoutInflater     = ((Activity)context).getLayoutInflater();
+        mDeleteListener     = listener;
+
+        mContext            = context;
     }
 
     private class ViewHolder{
@@ -58,9 +68,10 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         private TextView        mClientNamesTxt;
         private TextView        mNights;
         private TextView        mPrice;
+        private ImageView       mDeleteImg;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
 
             convertView                                 =  mLayoutInflater.inflate(R.layout.item_reservation, null);
@@ -71,6 +82,7 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
             viewHolder.mClientNamesTxt                  = (TextView) convertView.findViewById(R.id.client_names);
             viewHolder.mNights                          = (TextView) convertView.findViewById(R.id.nights);
             viewHolder.mPrice                           = (TextView) convertView.findViewById(R.id.price);
+            viewHolder.mDeleteImg                       = (ImageView)convertView.findViewById(R.id.delete_img);
 
             convertView.setTag(viewHolder);
         }
@@ -78,8 +90,6 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         DecimalFormat decimalFormat = new DecimalFormat("00.00");
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = Calendar.getInstance();
-
-
 
         Reservation reservation = mReservations.get(position);
         Client      client      = mClients.get(position);
@@ -112,8 +122,16 @@ public class ReservationsAdapter extends ArrayAdapter<Reservation> {
         holder.mPrice.setText(decimalFormat.format(price) + "lv.");
         holder.mHotelNameTxt.setText(hotel.getmHotelName());
         String image    = hotel.getmImages().get(0);
+
+        holder.mDeleteImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDeleteListener.onDelete(position);
+            }
+        });
+
         if(image != null){
-            DownloadImage downloadImage = new DownloadImage() {
+            DownloadImage downloadImage = new DownloadImage(mContext) {
                 @Override
                 protected void onPostExecute(Bitmap bitmap) {
                     super.onPostExecute(bitmap);

@@ -1,16 +1,26 @@
 package eu.mobile.hotelssbd.activitites;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.mobile.hotelssbd.FilterDialog;
 import eu.mobile.hotelssbd.models.Room;
 import eu.mobile.hotelssbd.database.CategoriesTable;
 import eu.mobile.hotelssbd.database.HotelsTable;
@@ -20,11 +30,19 @@ import eu.mobile.hotelssbd.R;
 import eu.mobile.hotelssbd.adapters.HotelsAdapter;
 import eu.mobile.hotelssbd.database.RoomsTable;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener, TextWatcher{
 
     private ListView        mHotelsListView;
-    private List<Hotel>     mHotels = new ArrayList<>();
+    private List<Hotel>     mHotels             = new ArrayList<>();
+    private List<Hotel>     mBuffHotels         = new ArrayList<>();
     private Button          mShowReservationsBtn;
+    private ImageView       mSearchImg;
+    private ImageView       mCloseImg;
+    private EditText        mSearchEdt;
+    private TextView        mTitleTxt;
+    private ImageView       mFilterImg;
+
+    private HotelsAdapter   mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,28 +57,38 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void initUI(){
-        mHotelsListView         = (ListView) findViewById(R.id.hotels_list_view);
-        mShowReservationsBtn    = (Button)   findViewById(R.id.show_btn);
+        mHotelsListView         = (ListView)    findViewById(R.id.hotels_list_view);
+        mShowReservationsBtn    = (Button)      findViewById(R.id.show_btn);
+        mSearchImg              = (ImageView)   findViewById(R.id.search_img);
+        mSearchEdt              = (EditText)    findViewById(R.id.search_edt);
+        mTitleTxt               = (TextView)    findViewById(R.id.title_txt);
+        mCloseImg               = (ImageView)   findViewById(R.id.close_img);
+        mFilterImg              = (ImageView)   findViewById(R.id.filter_img);
     }
 
     private void setListeners(){
         mShowReservationsBtn.setOnClickListener(this);
+        mSearchImg.setOnClickListener(this);
+        mCloseImg.setOnClickListener(this);
+        mSearchEdt.addTextChangedListener(this);
+        mFilterImg.setOnClickListener(this);
     }
 
     private void setAdapter(){
-        List<Hotel>     hotels  = HotelsTable.getInstance(this).selectAllHotels();
-        HotelsAdapter   adapter = new HotelsAdapter(this,hotels);
-        mHotelsListView.setAdapter(adapter);
+        mHotels  = HotelsTable.getInstance(this).selectAllHotels();
+        mBuffHotels.addAll(mHotels);
+        mAdapter = new HotelsAdapter(this,mBuffHotels);
+        mHotelsListView.setAdapter(mAdapter);
     }
 
     private void loadDatabase(){
         HotelsTable hotelsTable = HotelsTable.getInstance(this);
         if(hotelsTable.getHotelCount() == 0) {
-            Hotel hotelFirst    = new Hotel(0, "INTERNATIONAL Hotel Casino & Tower Suites", "5-star hotel");
-            Hotel hotelSecond   = new Hotel(0, "Meliá Grand Hermitage", "5-star hotel");
-            Hotel hotelThird    = new Hotel(0, "Grifid Hotel \"Arabella\"", "4-star hotel");
-            Hotel hotelFourth   = new Hotel(0, "Hotel \"Preslav\"", "3-star hotel");
-            Hotel hotelFifth    = new Hotel(0, "Hotel \"Viva Club\"", "4-star hotel");
+            Hotel hotelFirst    = new Hotel(0, "INTERNATIONAL Hotel", "5-star hotel", 5);
+            Hotel hotelSecond   = new Hotel(0, "Meliá Grand Hermitage", "5-star hotel", 5);
+            Hotel hotelThird    = new Hotel(0, "Grifid Hotel \"Arabella\"", "4-star hotel", 4);
+            Hotel hotelFourth   = new Hotel(0, "Hotel \"Preslav\"", "3-star hotel", 3);
+            Hotel hotelFifth    = new Hotel(0, "Hotel \"Viva Club\"", "4-star hotel", 3);
 
             List<String> images = new ArrayList<>();
 
@@ -219,6 +247,103 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         roomsTable.insertRooms(vivaRooms);
     }
 
+    private void showKeyboard(){
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInputFromWindow(mSearchEdt.getWindowToken(), InputMethodManager.SHOW_IMPLICIT, 0);
+    }
+
+    private void showHideSearchBox(final boolean showSearch){
+        final AlphaAnimation fadeIn   = new AlphaAnimation(0f, 1f);
+        final AlphaAnimation fadeOut        = new AlphaAnimation(1f, 0f);
+
+        fadeIn.setDuration(300);
+        fadeOut.setDuration(300);
+
+        if(showSearch) {
+            mTitleTxt.startAnimation(fadeOut);
+            mSearchImg.startAnimation(fadeOut);
+            mFilterImg.startAnimation(fadeOut);
+        }
+        else {
+            mSearchEdt.startAnimation(fadeOut);
+            mCloseImg.startAnimation(fadeOut);
+        }
+
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if(showSearch) {
+                    mSearchEdt.startAnimation(fadeIn);
+                    mCloseImg.startAnimation(fadeIn);
+
+                    mTitleTxt.setVisibility(View.INVISIBLE);
+                    mSearchImg.setVisibility(View.INVISIBLE);
+                    mFilterImg.setVisibility(View.INVISIBLE);
+
+                }
+                else {
+                    mTitleTxt.startAnimation(fadeIn);
+                    mSearchImg.startAnimation(fadeIn);
+                    mFilterImg.startAnimation(fadeIn);
+
+                    mSearchEdt.setVisibility(View.INVISIBLE);
+                    mCloseImg.setVisibility(View.INVISIBLE);
+                }
+
+                fadeOut.setAnimationListener(null);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        fadeIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                if(showSearch) {
+                    mSearchEdt.setVisibility(View.VISIBLE);
+                    mCloseImg.setVisibility(View.VISIBLE);
+                }
+                else {
+                    mTitleTxt.setVisibility(View.VISIBLE);
+                    mSearchImg.setVisibility(View.VISIBLE);
+                    mFilterImg.setVisibility(View.VISIBLE);
+                }
+
+                fadeIn.setAnimationListener(null);
+
+                showKeyboard();
+                mSearchEdt.requestFocus();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
+    private void onSearch(String searchWord){
+        mBuffHotels.clear();
+
+        mBuffHotels.addAll(HotelsTable.getInstance(this).searchHotels(searchWord));
+
+        mAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(this,RoomsActivity.class);
@@ -235,6 +360,40 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Intent intent = new Intent(this,ReservationsActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.search_img:
+                showHideSearchBox(true);
+                break;
+            case R.id.close_img:
+                showHideSearchBox(false);
+                mBuffHotels.clear();
+                mBuffHotels.addAll(mHotels);
+
+                mAdapter.notifyDataSetChanged();
+                mSearchEdt.setText("");
+                break;
+            case R.id.filter_img:
+                onFilter();
+                break;
         }
+    }
+
+    private void onFilter(){
+        FilterDialog filterDialog = new FilterDialog(this);
+        filterDialog.show();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        onSearch(charSequence.toString());
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 }

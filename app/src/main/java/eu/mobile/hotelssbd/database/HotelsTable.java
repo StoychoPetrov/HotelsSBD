@@ -39,6 +39,7 @@ public class HotelsTable extends SqliteDatabase {
 
             insertValues.put(COLUMN_HOTEL_NAME,         hotel.getmHotelName());
             insertValues.put(COLUMN_HOTEL_DESCRIPTION,  hotel.getmHotelDescription());
+            insertValues.put(COLUMN_STARS_COUNT,        hotel.getmStarsCount());
             List<String> images = hotel.getmImages();
 
             long hotelId = db.insert(HOTELS_TABLE_NAME,null,insertValues);
@@ -75,6 +76,33 @@ public class HotelsTable extends SqliteDatabase {
                 hotel.setmHotelId(cursor.getInt(cursor.getColumnIndex(COLUMN_HOTEL_ID)));
                 hotel.setmHotelName(cursor.getString(cursor.getColumnIndex(COLUMN_HOTEL_NAME)));
                 hotel.setmHotelDescription(cursor.getString(cursor.getColumnIndex(COLUMN_HOTEL_DESCRIPTION)));
+                hotel.setmStarsCount(cursor.getInt(cursor.getColumnIndex(COLUMN_STARS_COUNT)));
+                hotel.setmImages(selectImagesByHotelId(hotel.getmHotelId()));
+                hotels.add(hotel);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return hotels;
+    }
+
+    public List<Hotel> searchHotels(String searchWord){
+        List<Hotel> hotels = new ArrayList<>();
+
+        String query = "SELECT * FROM " + HOTELS_TABLE_NAME
+                + " WHERE " + COLUMN_HOTEL_NAME + " LIKE '" + searchWord + "%'";
+
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Hotel hotel = new Hotel();
+                hotel.setmHotelId(cursor.getInt(cursor.getColumnIndex(COLUMN_HOTEL_ID)));
+                hotel.setmHotelName(cursor.getString(cursor.getColumnIndex(COLUMN_HOTEL_NAME)));
+                hotel.setmHotelDescription(cursor.getString(cursor.getColumnIndex(COLUMN_HOTEL_DESCRIPTION)));
+                hotel.setmStarsCount(cursor.getInt(cursor.getColumnIndex(COLUMN_STARS_COUNT)));
                 hotel.setmImages(selectImagesByHotelId(hotel.getmHotelId()));
                 hotels.add(hotel);
             } while (cursor.moveToNext());

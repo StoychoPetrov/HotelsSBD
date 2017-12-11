@@ -81,6 +81,11 @@ public class ReservationsTable extends SqliteDatabase {
         return client;
     }
 
+    public boolean deleteReservation(int reservationId){
+        SQLiteDatabase db           = getWritableDatabase();
+        return db.delete(RESERVATIONS_TABLE_NAME, COLUMN_RESERVATION_ID + "=" + reservationId, null) > 0;
+    }
+
     public List<Reservation> selectReservations(Context context,List<Client> clients,List<Room> rooms, List<RoomDetails> roomDetailses, List<Hotel> hotels){
         String query = "SELECT * " +
                 "FROM " + CLIENTS_TABLE_NAME        + " clients " +

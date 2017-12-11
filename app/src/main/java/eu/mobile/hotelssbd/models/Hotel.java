@@ -11,14 +11,16 @@ public class Hotel {
     private int             mHotelId;
     private String          mHotelName;
     private String          mHotelDescription;
+    private int             mStarsCount;
     private List<String>    mImages;
 
     public Hotel(){}
 
-    public Hotel(int mHotelId, String mHotelName, String mHotelDescription) {
+    public Hotel(int mHotelId, String mHotelName, String mHotelDescription, int starsCount) {
         this.mHotelId = mHotelId;
         this.mHotelName = mHotelName;
         this.mHotelDescription = mHotelDescription;
+        this.mStarsCount        = starsCount;
     }
 
     public int getmHotelId() {
@@ -51,5 +53,13 @@ public class Hotel {
 
     public void setmImages(List<String> mImages) {
         this.mImages = mImages;
+    }
+
+    public int getmStarsCount() {
+        return mStarsCount;
+    }
+
+    public void setmStarsCount(int mStarsCount) {
+        this.mStarsCount = mStarsCount;
     }
 }

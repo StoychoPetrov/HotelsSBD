@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.net.MalformedURLException;
@@ -40,7 +41,7 @@ public class HotelsAdapter extends ArrayAdapter<Hotel> {
     private class ViewHolder{
         private ImageView   mHotelImageView;
         private TextView    mHotelNameTxt;
-        private TextView    mDescriptionTxt;
+        private RatingBar   mRatingBar;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -51,7 +52,7 @@ public class HotelsAdapter extends ArrayAdapter<Hotel> {
 
             viewHolder.mHotelImageView                  = (ImageView) convertView.findViewById(R.id.image);
             viewHolder.mHotelNameTxt                    = (TextView)  convertView.findViewById(R.id.name);
-            viewHolder.mDescriptionTxt                  = (TextView)  convertView.findViewById(R.id.description);
+            viewHolder.mRatingBar                       = (RatingBar) convertView.findViewById(R.id.rating_stars);
 
             convertView.setTag(viewHolder);
         }
@@ -60,10 +61,12 @@ public class HotelsAdapter extends ArrayAdapter<Hotel> {
         Hotel       hotel            = mHotels.get(position);
 
         holder.mHotelNameTxt.setText(hotel.getmHotelName());
-        holder.mDescriptionTxt.setText(hotel.getmHotelDescription());
         String image    = hotel.getmImages().get(0);
+
+        holder.mRatingBar.setNumStars(hotel.getmStarsCount());
+
         if(image != null) {
-            DownloadImage downloadImage = new DownloadImage() {
+            DownloadImage downloadImage = new DownloadImage(mContext) {
                 @Override
                 protected void onPostExecute(Bitmap bitmap) {
                     super.onPostExecute(bitmap);
@@ -79,5 +82,4 @@ public class HotelsAdapter extends ArrayAdapter<Hotel> {
 
         return convertView;
     }
-
 }
