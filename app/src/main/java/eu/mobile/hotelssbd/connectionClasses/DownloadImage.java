@@ -35,7 +35,7 @@ public class DownloadImage extends AsyncTask<URL,Void,Bitmap> {
             String url = urls[0].toString();
             String fileName = url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
 
-            bitmap = loadImageFromStorage(fileName);
+            bitmap = getImageFromCache(fileName);
 
             if(bitmap != null)
                 return bitmap;
@@ -43,7 +43,7 @@ public class DownloadImage extends AsyncTask<URL,Void,Bitmap> {
             URLConnection conn = urls[0].openConnection();
             bitmap = BitmapFactory.decodeStream(conn.getInputStream());
 
-            saveToInternalStorage(bitmap, fileName);
+            saveImageToCache(bitmap, fileName);
 
         } catch (Exception ex) {
             return null;
@@ -56,41 +56,37 @@ public class DownloadImage extends AsyncTask<URL,Void,Bitmap> {
         super.onPostExecute(bitmap);
     }
 
-    private void saveToInternalStorage(Bitmap bitmapImage, String fileName){
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/hotels");
-        myDir.mkdirs();
-        String fname = fileName + ".jpg";
-        File file = new File (myDir, fname);
-        if (file.exists ())
-            file.delete ();
+    private void saveImageToCache(Bitmap bitmap, String fileName){
         try {
-            FileOutputStream out = new FileOutputStream(file);
-            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-            out.close();
-
-        } catch (Exception e) {
+            File file = File.createTempFile(fileName, ".png", mContext.getCacheDir());
+            FileOutputStream outputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private Bitmap loadImageFromStorage(String fileName)
-    {
-
+    private Bitmap getImageFromCache(String fileName){
+        Bitmap bitmap   = null;
         try {
-            File f = new File("hotels", fileName);
+            File cacheDir = mContext.getCacheDir();
+            File[] files = cacheDir.listFiles();
+            File image = null;
 
-            Bitmap b = null;
-            if(f.exists())
-                b = BitmapFactory.decodeStream(new FileInputStream(f));
+            for (File file : files) {
+                if (file.getName().startsWith(fileName)) {
+                    image = file;
+                    break;
+                }
+            }
 
-            return b;
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        return null;
+            if (image != null) {
+                bitmap = BitmapFactory.decodeFile(image.getAbsolutePath());
+            }
+        } catch (Exception e){}
+
+        return bitmap;
     }
 }

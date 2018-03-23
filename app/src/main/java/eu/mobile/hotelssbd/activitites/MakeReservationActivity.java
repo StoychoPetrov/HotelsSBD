@@ -47,6 +47,7 @@ public class MakeReservationActivity extends AppCompatActivity implements View.O
         mLastNameEdt        = (EditText) findViewById(R.id.last_name_edt);
         mEgnEdt             = (EditText) findViewById(R.id.egn_edt);
         mSaveBtn            = (Button)   findViewById(R.id.save_btn);
+
         Calendar calendar   = Calendar.getInstance();
         mDatePicker         = new DatePickerDialog(this, this, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
         mDatePicker.getDatePicker().setMinDate(calendar.getTimeInMillis());
